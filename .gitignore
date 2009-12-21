@@ -1,0 +1,6 @@
+test/dest/
+*.gem
+pkg/
+*.swp
+*~
+out/
