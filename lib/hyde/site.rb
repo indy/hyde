@@ -30,10 +30,6 @@ module Hyde
     def setup
     end
 
-    def textile(content)
-      RedCloth.new(content).to_html
-    end
-
     # Do the actual work of processing the site and generating the
     # real deal.
     #

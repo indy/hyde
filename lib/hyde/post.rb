@@ -7,7 +7,7 @@ module Hyde
     MATCHER = /^(.+\/)*(\d+-\d+-\d+)-(.*)(\.[^.]+)$/
 
     # Post name validator. Post filenames must be like:
-    #   2008-11-05-my-awesome-post.textile
+    #   2008-11-05-my-awesome-post.html
     #
     # Returns <Bool>
     def self.valid?(name)

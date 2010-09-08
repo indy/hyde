@@ -24,7 +24,6 @@ module Hyde
       self.read_yaml(File.join(base, dir), name)
 
       self.data["folder"] = @dir
-      #self.transform
     end
 
     # Extract information from the page filename

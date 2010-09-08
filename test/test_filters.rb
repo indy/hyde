@@ -18,10 +18,6 @@ class TestFilters < Test::Unit::TestCase
       assert_equal "2009-11-12", @filter.date_to_short_string(Time.gm(2009, 11, 12))
     end
 
-    should "textilize with simple string" do
-      assert_equal "<p>something <strong>really</strong> simple</p>", @filter.textilize("something *really* simple")
-    end
-
     should "convert array to sentence string with no args" do
       assert_equal "", @filter.array_to_sentence_string([])
     end

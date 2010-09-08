@@ -25,29 +25,6 @@ module Hyde
       end
     end
 
-    # Transform the contents based on the file extension.
-    #
-    # Returns nothing
-    def transform
-      case self.content_type
-      when 'textile'
-        self.ext = ".html"
-        self.content = self.site.textile(self.content)
-      end
-    end
-
-    # Determine which formatting engine to use based on this convertible's
-    # extension
-    #
-    # Returns one of :textile, :markdown or :unknown
-    def content_type
-      case self.ext[1..-1]
-      when /textile/i
-        return 'textile'
-      end
-      return 'unknown'
-    end
-
     # Add any necessary layouts to this convertible document
     #   +layouts+ is a Hash of {"name" => "layout"}
     #   +site_payload+ is the site payload hash
@@ -55,11 +32,8 @@ module Hyde
     # Returns nothing
     def do_layout(payload, layouts)
       info = { :filters => [Hyde::Filters], :registers => { :site => self.site } }
-
-      # render and transform content (this becomes the final content of the object)
-      payload["content_type"] = self.content_type
+#      payload["content_type"] = "unknown"
       self.content = Liquid::Template.parse(self.content).render(payload, info)
-      self.transform
 
       # output keeps track of what will finally be written
       self.output = self.content
