@@ -128,6 +128,13 @@ module Hyde
       entries = filter_entries(Dir.entries(base))
       directories = entries.select { |e| File.directory?(File.join(base, e)) }
 
+      zonal_filename = File.join(base, '_zonal.yaml')
+      if File.exist?(zonal_filename)
+        structure["zonal"] = YAML.load(IO.read(zonal_filename))
+      else
+        structure["zonal"] = {}
+      end
+
       # we need to make sure to process _posts *first* otherwise they
       # might not be available yet to other templates as {{ site.posts }}
       if directories.include?('_posts')
@@ -144,21 +151,27 @@ module Hyde
       structure
     end
 
-    def zone_posts(dir)
+    def zone_section(dir)
       # get an array of Posts from the correct sub-hash of self.zones
       path = dir.split("/")[1..-1]
       if path
-        path.inject(self.zones) { |s, e| s[e] }["posts"]
+        path.inject(self.zones) { |s, e| s[e] }
       else
-        self.zones["posts"]     # when there are only toplevel posts
+        self.zones     # when there are only toplevel posts
       end
     end
 
     # use the Post structures in zone to render
     def render_posts(dir)
       # render each post now that full site payload is available
-      zone_posts(dir).each do |post|
-        post.render(self.layouts, site_payload)
+
+      section = zone_section(dir)
+      zone_posts = section["posts"]
+
+      payload = site_payload.deep_merge(section["zonal"])
+      
+      zone_posts.each do |post|
+        post.render(self.layouts, payload)
       end
     rescue Errno::ENOENT => e
       # ignore missing layout dir

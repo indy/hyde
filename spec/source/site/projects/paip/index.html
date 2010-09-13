@@ -1,0 +1,13 @@
+---
+layout: book
+title: Paradigms of Artificial Intelligence Programming
+bookcover: /img/bookcover-paip.png
+amazonuk: http://www.amazon.co.uk/Paradigms-Artificial-Intelligence-Programming-Studies/dp/1558601910/ref=sr_1_1?ie=UTF8&s=books&qid=1284288667&sr=8-1
+amazonus: http://www.amazon.com/Paradigms-Artificial-Intelligence-Programming-Studies/dp/1558601910
+---
+<p>A series of articles articles about Peter Norvig's book</p>
+<ul>
+  {% for post in zone.projects.paip.posts %}
+  <li><a href="{{ post.url }}">{{ post.title }}</a></li>
+  {% endfor %}
+</ul>

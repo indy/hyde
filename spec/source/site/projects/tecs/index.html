@@ -1,0 +1,14 @@
+---
+layout: book
+bookcover: /img/bookcover-tecs.png
+bookname: The Elements of Computing Systems
+title: Index
+amazonuk: http://www.amazon.co.uk/gp/product/0262640686/ref=oss_product
+amazonus: http://www.amazon.com/Elements-Computing-Systems-Building-Principles/dp/0262640686/ref=sr_1_1?ie=UTF8&s=books&qid=1284287043&sr=8-1
+---
+<p>Working through the exercises in TECS</p>
+<ul>
+  {% for post in zone.projects.tecs.posts %}
+  <li><a href="{{ post.url }}">{{ post.title }}</a></li>
+  {% endfor %}
+</ul>

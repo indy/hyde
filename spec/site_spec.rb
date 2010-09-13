@@ -23,4 +23,9 @@ describe Hyde::Site do
     posts = @site.create_posts "journal"
     posts.length.should == 7
   end
+
+  it "should read zones" do
+    zones = @site.read_zones
+    zones["projects"]["tecs"]["zonal"]["bookcover"].should == "some-cover.jpg"
+  end
 end
