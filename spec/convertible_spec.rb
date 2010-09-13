@@ -1,14 +1,5 @@
 require 'spec_helper'
 
-class ConvertibleHolder
-  include Hyde::Convertible
-
-  attr_accessor :content
-  attr_accessor :data
-  attr_accessor :site
-  attr_accessor :output
-end
-
 describe ConvertibleHolder do
   it "should the read YAML header" do
     ch = ConvertibleHolder.new
