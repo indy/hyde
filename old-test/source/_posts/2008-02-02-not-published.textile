@@ -1,7 +1,0 @@
----
-layout: default
-title: Not published!
-draft: true
----
-
-This should *not* be published!
