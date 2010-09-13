@@ -210,7 +210,11 @@ module Hyde
             if first3 == "---"
               # file appears to have a YAML header so process it as a page
               page = Page.new(self, self.source, dir, f)
-              page.render(self.layouts, site_payload)
+
+              section = zone_section(dir)
+              payload = site_payload.deep_merge({"zonal" => section["zonal"]})
+
+              page.render(self.layouts, payload)
               page.write(self.dest)
             else
               # otherwise copy the file without transforming it
