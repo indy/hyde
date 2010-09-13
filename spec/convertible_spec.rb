@@ -52,4 +52,25 @@ describe ConvertibleHolder do
 
     ch.output.should == "<laybefore><before>indy.io<after><layafter>"
   end
+
+  it "should calculate a nested layout" do
+
+    layout2 = ConvertibleHolder.new
+    layout2.data = {}
+    layout2.content = "<lay2before>{{ content }}<lay2after>"
+
+    layout = ConvertibleHolder.new
+    layout.data = {"layout" => "lay2"}
+    layout.content = "<laybefore>{{ content }}<layafter>"
+
+    layouts = {"lay" => layout, "lay2" => layout2}
+
+    ch = ConvertibleHolder.new
+    ch.data = {"layout" => "lay"}
+    ch.content = "<before>{{ title }}<after>"
+
+    ch.do_layout({'title' => "indy.io"}, layouts)
+
+    ch.output.should == "<lay2before><laybefore><before>indy.io<after><layafter><lay2after>"
+  end
 end
