@@ -28,4 +28,10 @@ describe Hyde::Site do
     zones = @site.read_zones
     zones["projects"]["tecs"]["zonal"]["bookcover"].should == "some-cover.jpg"
   end
+
+  it "should transform pages" do
+    @site.process
+    @site.transform_pages
+  end
+
 end

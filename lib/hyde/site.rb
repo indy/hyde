@@ -166,10 +166,11 @@ module Hyde
       # render each post now that full site payload is available
 
       section = zone_section(dir)
+
       zone_posts = section["posts"]
 
-      payload = site_payload.deep_merge(section["zonal"])
-      
+      payload = site_payload.deep_merge({"zonal" => section["zonal"]})
+
       zone_posts.each do |post|
         post.render(self.layouts, payload)
       end
@@ -220,6 +221,8 @@ module Hyde
         end
       end
     end
+
+
 
     # The Hash payload containing site-wide data
     #
