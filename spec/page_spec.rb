@@ -1,9 +1,4 @@
-require 'yaml'
-require 'hyde/convertible'
-require 'hyde/page'
-
-# run test with:
-# spec page_spec.rb --format specdoc
+require "spec_helper"
 
 describe Hyde::Page do
   it "should return the contents as a string" do
