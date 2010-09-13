@@ -1,0 +1,17 @@
+---
+layout: default-with-nav
+---
+<article>
+  <header>
+    <a href="{{page.amazonuk}}"><img alt={{page.title}} src="{{page.bookcover}}" /></a>
+    <ul>
+      <li><a href="{{page.amazonuk}}">Amazon UK</a></li>
+      <li><a href="{{page.amazonus}}">Amazon US</a></li>
+    </ul>
+  </header>
+  <div id="inner-container">
+    <a href="index.html"><h1>{{ page.bookname }}</h1></a>
+    <h1>{{ page.title }}</h1>
+    {{content}}
+  </div>
+</article>

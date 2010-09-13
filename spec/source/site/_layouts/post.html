@@ -1,0 +1,15 @@
+---
+layout: default-with-nav
+---
+<article>
+  <header>
+    <h1>{{ page.title }}</h1>
+    <time datetime="{{ page.date | date_to_short_string }}" pubdate>
+      {{ page.date | date_to_long_string }}
+    </time>
+  </header>
+
+  <div id="inner-container">
+    {{ content }}
+  </div> <!-- inner-container -->
+</article>

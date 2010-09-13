@@ -1,0 +1,9 @@
+---
+layout: default-article
+title: Journal
+---
+<ul>
+  {% for post in zone.journal.posts %}
+  <li><a href="{{ post.url }}">{{ post.title }}</a></li>
+  {% endfor %}
+</ul>

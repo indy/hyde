@@ -1,0 +1,86 @@
+---
+layout: post
+title: Parsing XML
+---
+<pre><code>(ns core
+  (:require [clojure.zip :as zip]
+            [clojure.xml :as xml]
+            [clojure.string :as string])
+  (:use clojure.contrib.zip-filter.xml))
+
+(defn clean-up
+  [s]
+  (-> s
+      (string/replace #"/\*.*\*/" "") ; remove /* */ comments
+      (string/replace "\r\n" "\n") ; replace \r\n with \n
+      (string/replace #"--+.*\n" "") ; remove -- comments
+      (string/replace #"[\n\t]" " ") ; replace newlines, tabs with spaces
+      ))
+
+(defn into-tokens [s]
+  (string/split s #"[ ]+"))
+
+(defn declaring-table? [tok]
+  (or (= (string/lower-case tok) "from")
+      (= (string/lower-case tok) "join")))
+
+(defn tidy-tablename
+  [tbl]
+  (-> tbl
+      (string/lower-case)
+      (string/replace #"^dbo." "")
+      (string/replace ")" "")))
+
+(defn find-tables [t]
+  "given a token stream, returns table names"
+  (map #(tidy-tablename (second %))
+       (filter #(declaring-table? (first %))
+               (partition 2 (interleave t (rest t))))))
+
+(defn parse-sql-for-tables
+  "returns list of tables that are used by the query"
+  [sql]
+  (-> sql clean-up into-tokens find-tables))
+
+(defn zip-file [filename]
+  (zip/xml-zip (xml/parse (java.io.File. filename))))
+
+(defn parse-xml-table
+  [table]
+  (let [table-name (first (xml-> table (attr :name)))]
+    (map (fn [provider sql]
+           (list table-name
+                 provider
+                 (parse-sql-for-tables sql)))
+         (xml-> table :SOURCESET :DATAPROVIDER (attr :SharedProviderID))
+         (xml-> table :SOURCESET :DATAPROVIDER :COMMANDTEXT text))))
+
+(defn parse-tables-from-xml
+  [zipper]
+  (mapcat parse-xml-table (xml-> zipper :TABLE)))
+
+(defn add-tables
+  [s tables]
+  (let [sett (if (nil? s) (sorted-set) s)]
+    (reduce #(conj %1 %2) sett tables)))
+
+(defn merge-tables
+  "possibly multiple entries for a table to coalesce them"
+  [re7]
+  (reduce (fn [h [master _ tables]]
+            (assoc h master (add-tables (h master) tables)))
+          (sorted-map)
+          re7))
+
+(defn view-tables
+  [res]
+  (map (fn [t]
+         (println (first t))
+         (map (fn [e] (println "   " e)) (second t)))
+       res))
+
+(defn main
+  [filename]
+  (merge-tables
+    (filter #(= "re7connection" (string/lower-case (second %)))
+            (parse-tables-from-xml (zip-file filename)))))</code></pre>

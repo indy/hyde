@@ -237,5 +237,5 @@ module Hyde
       end
     end
 
-v  end
+  end
 end
