@@ -82,19 +82,11 @@ module Hyde
     end
 
     # The UID for this post (useful in feeds)
-    # e.g. /2008/11/05/my-awesome-post
+    # e.g. my-awesome-post
     #
     # Returns <String>
     def id
       self.dir + self.slug
-    end
-
-    # Calculate related posts.
-    #
-    # Returns [<Post>]
-    def related_posts(posts)
-      return [] unless posts.size > 1
-      (posts - [self])[0..9]
     end
 
     # Add any necessary layouts to this post
@@ -106,7 +98,7 @@ module Hyde
       # construct payload
       payload =
       {
-        "site" => { "related_posts" => related_posts(site_payload["site"]["posts"]) },
+        "site" => {},
         "page" => self.to_liquid
       }
       payload = payload.deep_merge(site_payload)
