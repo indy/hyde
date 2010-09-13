@@ -40,7 +40,6 @@ module Hyde
       self.read_snippets
 
       self.zones = self.read_zones
-#      pp self.zones
 
       self.posts.sort!
 
@@ -238,5 +237,5 @@ module Hyde
       end
     end
 
-  end
+v  end
 end
