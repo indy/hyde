@@ -1,4 +1,5 @@
 require 'yaml'
+require 'hyde/core_ext'
 require 'hyde/convertible'
 require 'hyde/page'
 # require 'spec'
