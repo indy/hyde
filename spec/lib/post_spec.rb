@@ -1,4 +1,4 @@
-require "spec_helper"
+require_relative "spec_helper"
 
 describe Hyde::Post do
 
@@ -9,9 +9,8 @@ describe Hyde::Post do
     @layouts = {"lay" => layout}
 
     @postname = "2010-09-13-sample-post.html"
-    source = File.join(File.dirname(__FILE__), "source")
     @post = Hyde::Post.new("testsite", 
-                           source, 
+                           data_folder(), 
                            "post", 
                            @postname)
     @post.render(@layouts, {})

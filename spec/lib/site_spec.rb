@@ -1,9 +1,9 @@
-require 'spec_helper'
+require_relative 'spec_helper'
 
 describe Hyde::Site do
 
   before do
-    config = {'source' => File.join(File.dirname(__FILE__), "source", "site"),
+    config = {'source' => File.join(data_folder(), "site"),
               'destination' => '/tmp/'}
 
     @site = Hyde::Site.new(config)

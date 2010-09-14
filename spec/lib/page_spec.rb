@@ -1,4 +1,4 @@
-require "spec_helper"
+require_relative "spec_helper"
 
 describe Hyde::Page do
 
@@ -8,9 +8,8 @@ describe Hyde::Page do
     layout.content = "<laybefore>{{ content }}<layafter>"
     @layouts = {"lay" => layout}
 
-    source = File.join(File.dirname(__FILE__), "source")
     @page = Hyde::Page.new("testsite", 
-                           source, 
+                           data_folder(), 
                            "page", 
                            "has-data.html")
     @page.render(@layouts, @page.data)

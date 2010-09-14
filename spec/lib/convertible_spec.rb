@@ -1,10 +1,10 @@
-require 'spec_helper'
+require_relative 'spec_helper'
 
 describe ConvertibleHolder do
   it "should the read YAML header" do
     ch = ConvertibleHolder.new
 
-    base = File.join(File.dirname(__FILE__), "source", "convertible")
+    base = File.join(data_folder, "convertible")
 
     ch.read_yaml(base, "content-only.html")
     ch.content.should == "Hello world!\n"

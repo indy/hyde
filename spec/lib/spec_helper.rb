@@ -19,3 +19,6 @@ class ConvertibleHolder
   attr_accessor :output
 end
 
+def data_folder
+  File.join(File.dirname(__FILE__), "..", "data")
+end
