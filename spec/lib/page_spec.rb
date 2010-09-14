@@ -17,7 +17,7 @@ describe Hyde::Page do
 
 
   it "should render a page" do
-    @page.output.should == "<laybefore>Hello Bob!\n<layafter>"
+    @page.output.should == "<laybefore>Hello Bob!<layafter>"
   end
 
   it "should write a page" do
