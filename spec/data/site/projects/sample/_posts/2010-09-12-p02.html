@@ -1,0 +1,15 @@
+---
+layout: zsample
+title: Chapter 02 - Boolean Arithmetic
+---
+<h2>HalfAdder</h2>
+<pre><code>CHIP HalfAdder {
+
+    IN  a, b;
+    OUT sum,   // LSB of a + b
+        carry; // MSB of a + b
+
+    PARTS:
+    And(a=a,b=b,out=carry);
+    Xor(a=a,b=b,out=sum);
+}</code></pre>
