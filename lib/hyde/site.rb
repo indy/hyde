@@ -22,8 +22,6 @@ module Hyde
     def reset
       self.layouts         = {}
       self.snippets        = {}
-      self.posts           = []
-
       self.zones = {}
     end
 
@@ -41,10 +39,7 @@ module Hyde
 
       self.zones = self.read_zones
 
-      self.posts.sort!
-
       self.transform_pages
-      self.write_posts
     end
 
     def debug_hash(h)
@@ -89,15 +84,6 @@ module Hyde
       # ignore missing layout dir
     end
 
-    # Write each post to <dest>/<year>/<month>/<day>/<slug>
-    #
-    # Returns nothing
-    def write_posts
-      self.posts.each do |post|
-        post.write(self.dest)
-      end
-    end
-
     def create_posts(dir)
       base = File.join(self.source, dir, '_posts')
       entries = []
@@ -113,12 +99,11 @@ module Hyde
 
           if not post.draft
             my_posts << post
-            self.posts << post
           end
         end
       end
 
-      my_posts.sort!.reverse!
+      my_posts.sort!
     rescue Errno::ENOENT => e
       # ignore missing layout dir
     end
@@ -173,6 +158,7 @@ module Hyde
 
       zone_posts.each do |post|
         post.render(self.layouts, payload)
+        post.write(self.dest)
       end
     rescue Errno::ENOENT => e
       # ignore missing layout dir
@@ -226,18 +212,9 @@ module Hyde
       end
     end
 
-
-
-    # The Hash payload containing site-wide data
-    #
-    # Returns {"site" => {"time" => <Time>,
-    #                     "posts" => [<Post>]}}
-
     def site_payload
       {"site" => {
-          "name" => "indy.io",
-          "time" => Time.now,
-          "posts" => self.posts.sort { |a,b| b <=> a }
+          "name" => "indy.io"
         },
         "snippet" => self.snippets,
         "zone" => self.zones

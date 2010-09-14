@@ -48,7 +48,7 @@ module Hyde
     #
     # Returns -1, 0, 1
     def <=>(other)
-      self.date <=> other.date
+      other.date <=> self.date
     end
 
     # Extract information from the post filename

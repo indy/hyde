@@ -32,7 +32,6 @@ describe Hyde::Site do
 
   it "should apply zonal information to pages" do
     @site.process
-    @site.transform_pages
     
     page = File.join(@destination, 'projects', 'sample', 'index.html')
     content = IO.read(page)
@@ -41,7 +40,6 @@ describe Hyde::Site do
 
   it "should apply zonal information to posts" do
     @site.process
-    @site.transform_pages
     
     page = File.join(@destination, 'projects', 'sample', 'p01.html')
     content = IO.read(page)
