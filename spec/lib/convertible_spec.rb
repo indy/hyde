@@ -7,11 +7,11 @@ describe ConvertibleHolder do
     base = File.join(data_folder, "convertible")
 
     ch.read_yaml(base, "content-only.html")
-    ch.content.should == "Hello world!\n"
+    ch.content.should == "Hello world!"
     ch.data.should == nil
 
     ch.read_yaml(base, "has-data.html")
-    ch.content.should == "Hello world!\n"
+    ch.content.should == "Hello world!"
     ch.data["title"].should == "A test page"
   end
 

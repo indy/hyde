@@ -23,6 +23,8 @@ module Hyde
 
         self.data = YAML.load($1)
       end
+
+      self.content.strip!
     end
 
     # Add any necessary layouts to this convertible document
