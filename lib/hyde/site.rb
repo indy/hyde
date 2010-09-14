@@ -16,16 +16,12 @@ module Hyde
       self.dest            = config['destination']
 
       self.reset
-      self.setup
     end
 
     def reset
-      self.layouts         = {}
-      self.snippets        = {}
+      self.layouts = {}
+      self.snippets = {}
       self.zones = {}
-    end
-
-    def setup
     end
 
     # Do the actual work of processing the site and generating the
@@ -120,11 +116,13 @@ module Hyde
         structure["zonal"] = {}
       end
 
-      # we need to make sure to process _posts *first* otherwise they
-      # might not be available yet to other templates as {{ site.posts }}
       if directories.include?('_posts')
         directories.delete('_posts')
         structure["posts"] = create_posts(dir)
+
+        if structure["zonal"].has_key? "sort-alpha"
+          structure["posts"].sort! {|x, y| x.slug <=> y.slug }
+        end
       end
 
       directories.each do |f|
