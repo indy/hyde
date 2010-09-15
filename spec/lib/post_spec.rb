@@ -24,18 +24,6 @@ describe Hyde::Post do
     @post.id.should == "post/sample-post"
   end
 
-  it "should compare against the postdate" do
-    pending "reverse the existing comparison operation"
-  end
-  it "should render a post" do
-    pending "check post creation"
-  end
-  it "should write a post" do
-    pending "check post writing"
-  end
-  it "should convert the post to a hash" do
-    pending "for use in Liquid templates"
-  end
 
 
 end

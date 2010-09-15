@@ -1,0 +1,15 @@
+---
+layout: zsample
+title: xxx
+---
+
+<h2>Bit</h2>
+<pre><code>CHIP Bit {
+
+    IN  in, load;
+    OUT out;
+
+    PARTS:
+    Mux(a=out2,b=in,sel=load,out=foo);
+    DFF(in=foo,out=out,out=out2);
+}</code></pre>
