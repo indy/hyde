@@ -4,14 +4,12 @@ module Hyde
     include Comparable
     include Convertible
 
-    MATCHER = /^(.+\/)*(\d+-\d+-\d+)-(.*)(\.[^.]+)$/
+    MATCHER = /^(\d+-\d+-\d+)-(.*)(\.[^.]+)$/
+    LOOSE_MATCHER = /^(.*)(\.[^.]+)$/
 
-    # Post name validator. Post filenames must be like:
-    #   2008-11-05-my-awesome-post.html
-    #
     # Returns <Bool>
-    def self.valid?(name)
-      name =~ MATCHER
+    def self.valid?(name, sort_alpha)
+      name =~ sort_alpha ? LOOSE_MATCHER : MATCHER
     end
 
     attr_accessor :site
@@ -24,7 +22,8 @@ module Hyde
     #   +name+ is the String filename of the post file
     #
     # Returns <Post>
-    def initialize(site, source, dir, name)
+    def initialize(site, source, dir, name, sort_alpha = false)
+      @sort_alpha = sort_alpha
       @site = site
       @base = File.join(source, dir, '_posts')
       @name = name
@@ -48,7 +47,11 @@ module Hyde
     #
     # Returns -1, 0, 1
     def <=>(other)
-      other.date <=> self.date
+      if @sort_alpha
+        other.slug <=> self.slug
+      else
+        other.date <=> self.date
+      end
     end
 
     # Extract information from the post filename
@@ -56,8 +59,12 @@ module Hyde
     #
     # Returns nothing
     def process(name)
-      m, cats, date, slug, ext = *name.match(MATCHER)
-      self.date = Time.parse(date)
+      if @sort_alpha
+        all, slug, ext = *name.match(LOOSE_MATCHER)
+      else
+        all, date, slug, ext = *name.match(MATCHER)
+        self.date = Time.parse(date)
+      end
       self.slug = slug
       self.ext = ext
     end

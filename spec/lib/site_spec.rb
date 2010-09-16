@@ -31,7 +31,7 @@ describe Hyde::Site do
   end
 
   it "should create posts" do
-    posts = @site.create_posts "journal"
+    posts = @site.create_posts("journal", {})
     posts.length.should == 7
   end
 
@@ -56,6 +56,10 @@ describe Hyde::Site do
     page = File.join(@destination, 'projects', 'sortalpha', 'index.html')
     content = IO.read(page)
     content.should == "<foo><li>xxx</li><li>yyy</li><li>zzz</li><bar>\n<baz>sort-alpha<baq>"
+  end
+
+  it "should make dates optional" do
+    
   end
 
 end
