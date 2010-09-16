@@ -80,21 +80,18 @@ module Hyde
       # ignore missing layout dir
     end
 
-    def create_posts(dir, zonal)
+    def create_posts(dir)
       base = File.join(self.source, dir, '_posts')
       entries = []
       Dir.chdir(base) { entries = filter_entries(Dir['**/*']) }
 
       # first pass processes, but does not yet render post content
 
-
-      sort_alpha =  zonal.has_key? "sort-alpha"
-
       my_posts = []
 
       entries.each do |f|
-        if Post.valid?(f, sort_alpha)
-          post = Post.new(self, self.source, dir, f, sort_alpha)
+        if Post.valid?(f)
+          post = Post.new(self, self.source, dir, f)
 
           if not post.draft
             my_posts << post
@@ -121,7 +118,7 @@ module Hyde
 
       if directories.include?('_posts')
         directories.delete('_posts')
-        structure["posts"] = create_posts(dir, structure["zonal"])
+        structure["posts"] = create_posts(dir)
       end
 
       directories.each do |f|

@@ -31,7 +31,7 @@ describe Hyde::Site do
   end
 
   it "should create posts" do
-    posts = @site.create_posts("journal", {})
+    posts = @site.create_posts("journal")
     posts.length.should == 7
   end
 

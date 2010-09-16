@@ -17,7 +17,7 @@ describe Hyde::Post do
   end
 
   it "should be named with a valid format" do
-    Hyde::Post.valid?(@postname, false).should be_true
+    Hyde::Post.valid?(@postname).should be_true
   end
 
   it "should have a valid post id" do

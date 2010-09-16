@@ -8,8 +8,8 @@ module Hyde
     LOOSE_MATCHER = /^(.*)(\.[^.]+)$/
 
     # Returns <Bool>
-    def self.valid?(name, sort_alpha)
-      name =~ sort_alpha ? LOOSE_MATCHER : MATCHER
+    def self.valid?(name)
+      name =~ MATCHER || name =~ LOOSE_MATCHER
     end
 
     attr_accessor :site
@@ -22,8 +22,13 @@ module Hyde
     #   +name+ is the String filename of the post file
     #
     # Returns <Post>
-    def initialize(site, source, dir, name, sort_alpha = false)
-      @sort_alpha = sort_alpha
+    def initialize(site, source, dir, name)
+      if name =~ MATCHER
+        @sort_alpha = false
+      elsif name =~ LOOSE_MATCHER
+        @sort_alpha = true
+      end
+
       @site = site
       @base = File.join(source, dir, '_posts')
       @name = name
@@ -48,7 +53,7 @@ module Hyde
     # Returns -1, 0, 1
     def <=>(other)
       if @sort_alpha
-        other.slug <=> self.slug
+        self.slug <=> other.slug
       else
         other.date <=> self.date
       end
