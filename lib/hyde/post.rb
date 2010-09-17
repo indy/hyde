@@ -13,7 +13,7 @@ module Hyde
     end
 
     attr_accessor :site
-    attr_accessor :date, :slug, :ext, :topics, :draft
+    attr_accessor :date, :slug, :draft
     attr_accessor :data, :content, :output
 
     # Initialize this Post instance.
@@ -33,12 +33,16 @@ module Hyde
       @base = File.join(source, dir, '_posts')
       @name = name
 
-      parts = name.split('/')
-      self.topics = parts.size > 1 ? parts[0..-2] : []
-
       @base_dir = dir
 
-      self.process(name)
+      if @sort_alpha
+        all, slug, ext = *name.match(LOOSE_MATCHER)
+      else
+        all, date, slug, ext = *name.match(MATCHER)
+        self.date = Time.parse(date)
+      end
+      self.slug = slug
+
       self.read_yaml(@base, name)
 
       if self.data.has_key?('draft') && self.data['draft'] == true
@@ -59,20 +63,6 @@ module Hyde
       end
     end
 
-    # Extract information from the post filename
-    #   +name+ is the String filename of the post file
-    #
-    # Returns nothing
-    def process(name)
-      if @sort_alpha
-        all, slug, ext = *name.match(LOOSE_MATCHER)
-      else
-        all, date, slug, ext = *name.match(MATCHER)
-        self.date = Time.parse(date)
-      end
-      self.slug = slug
-      self.ext = ext
-    end
 
     # The generated directory into which the post will be placed
     # upon generation.
@@ -141,7 +131,6 @@ module Hyde
         "folder" => self.folder,
         "date" => self.date,
         "id" => self.id,
-        "topics" => self.topics,
         "content" => self.content }.deep_merge(self.data)
     end
 

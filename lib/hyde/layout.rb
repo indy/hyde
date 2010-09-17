@@ -4,7 +4,6 @@ module Hyde
     include Convertible
 
     attr_accessor :site
-    attr_accessor :ext
     attr_accessor :data, :content
 
     # Initialize a new Layout.
@@ -20,17 +19,7 @@ module Hyde
 
       self.data = {}
 
-      self.process(name)
       self.read_yaml(base, name)
     end
-
-    # Extract information from the layout filename
-    #   +name+ is the String filename of the layout file
-    #
-    # Returns nothing
-    def process(name)
-      self.ext = File.extname(name)
-    end
   end
-
 end
