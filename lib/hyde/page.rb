@@ -48,8 +48,6 @@ module Hyde
       end
       self.slug = slug
 
-
-
       self.read_yaml(File.join(base, dir), name)
       self.data ||= {}
 
@@ -58,8 +56,6 @@ module Hyde
       else
         self.draft = false
       end
-
-
     end
 
     # Spaceship is based on Post#date
@@ -73,14 +69,6 @@ module Hyde
       end
     end
 
-    # The generated directory into which the post will be placed
-    # upon generation.
-    #
-    # Returns <String>
-    def dir
-      @dir + '/'
-    end
-
     # The generated relative url of this post
     #
     # Returns <String>
@@ -88,16 +76,12 @@ module Hyde
       self.id + '.html'
     end
 
-    def folder
-      @dir
-    end
-
     # The UID for this post (useful in feeds)
     # e.g. my-awesome-post
     #
     # Returns <String>
     def id
-      self.dir + self.slug
+      @dir + '/' + self.slug
     end
 
 
@@ -138,7 +122,7 @@ module Hyde
     def to_liquid
       { "title" => self.data["title"] || self.slug.split('-').select {|w| w.capitalize! || w }.join(' '),
         "url" => self.url,
-        "folder" => self.folder,
+        "folder" => @dir,
         "date" => self.date,
         "id" => self.id,
         "content" => self.content }.deep_merge(self.data)
