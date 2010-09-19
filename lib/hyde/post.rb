@@ -21,17 +21,25 @@ module Hyde
     #   +name+ is the String filename of the post file
     #
     # Returns <Post>
-    def initialize(source, dir, name)
+    def initialize(base, dir, name)
+#      puts "POST base=#{base}, dir=#{dir}, name=#{name}"
+
+      # is this a post?
+      if dir.split('/')[-1] == '_posts' 
+        @base_dir = dir.split('/')[0..-2].join('/')
+      else
+        @base_dir = dir
+      end
+
+
       if name =~ MATCHER
         @sort_alpha = false
       elsif name =~ LOOSE_MATCHER
         @sort_alpha = true
       end
 
-      @base = File.join(source, dir, '_posts')
+      @base = File.join(base, dir)
       @name = name
-
-      @base_dir = dir
 
       if @sort_alpha
         all, slug, ext = *name.match(LOOSE_MATCHER)

@@ -81,7 +81,9 @@ module Hyde
     end
 
     def create_posts(dir)
-      base = File.join(self.source, dir, '_posts')
+      posts_dir = File.join(dir, '_posts')
+
+      base = File.join(self.source, posts_dir)
       entries = []
       Dir.chdir(base) { entries = filter_entries(Dir['**/*']) }
 
@@ -91,7 +93,7 @@ module Hyde
 
       entries.each do |f|
         if Post.valid?(f)
-          post = Post.new(self.source, dir, f)
+          post = Post.new(self.source, posts_dir, f)
 
           if not post.draft
             my_posts << post

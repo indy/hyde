@@ -10,7 +10,7 @@ describe Hyde::Post do
 
     @postname = "2010-09-13-sample-post.html"
     @post = Hyde::Post.new(data_folder(), 
-                           "post", 
+                           File.join('post', '_posts'), 
                            @postname)
     @post.render(@layouts, {})
   end

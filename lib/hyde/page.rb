@@ -13,6 +13,9 @@ module Hyde
     #
     # Returns <Page>
     def initialize(base, dir, name)
+#      puts "PAGE: base=#{base}, dir=#{dir}, name=#{name}"
+
+
       @base = base
       @dir = dir
       @name = name
