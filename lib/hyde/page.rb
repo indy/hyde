@@ -3,7 +3,6 @@ module Hyde
   class Page
     include Convertible
 
-    attr_accessor :site
     attr_accessor :data, :content, :output
 
     # Initialize a new Page.
@@ -13,8 +12,7 @@ module Hyde
     #   +name+ is the String filename of the file
     #
     # Returns <Page>
-    def initialize(site, base, dir, name)
-      @site = site
+    def initialize(base, dir, name)
       @base = base
       @dir = dir
       @name = name

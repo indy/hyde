@@ -9,8 +9,7 @@ describe Hyde::Post do
     @layouts = {"lay" => layout}
 
     @postname = "2010-09-13-sample-post.html"
-    @post = Hyde::Post.new("testsite", 
-                           data_folder(), 
+    @post = Hyde::Post.new(data_folder(), 
                            "post", 
                            @postname)
     @post.render(@layouts, {})

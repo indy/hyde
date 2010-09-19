@@ -33,7 +33,7 @@ module Hyde
     #
     # Returns nothing
     def do_layout(payload, layouts)
-      info = { :filters => [Hyde::Filters], :registers => { :site => self.site } }
+      info = { :filters => [Hyde::Filters], :registers => { } }
 #      payload["content_type"] = "unknown"
       self.content = Liquid::Template.parse(self.content).render(payload, info)
 

@@ -12,7 +12,6 @@ module Hyde
       name =~ MATCHER || name =~ LOOSE_MATCHER
     end
 
-    attr_accessor :site
     attr_accessor :date, :slug, :draft
     attr_accessor :data, :content, :output
 
@@ -22,14 +21,13 @@ module Hyde
     #   +name+ is the String filename of the post file
     #
     # Returns <Post>
-    def initialize(site, source, dir, name)
+    def initialize(source, dir, name)
       if name =~ MATCHER
         @sort_alpha = false
       elsif name =~ LOOSE_MATCHER
         @sort_alpha = true
       end
 
-      @site = site
       @base = File.join(source, dir, '_posts')
       @name = name
 

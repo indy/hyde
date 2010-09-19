@@ -91,7 +91,7 @@ module Hyde
 
       entries.each do |f|
         if Post.valid?(f)
-          post = Post.new(self, self.source, dir, f)
+          post = Post.new(self.source, dir, f)
 
           if not post.draft
             my_posts << post
@@ -189,7 +189,7 @@ module Hyde
 
             if first3 == "---"
               # file appears to have a YAML header so process it as a page
-              page = Page.new(self, self.source, dir, f)
+              page = Page.new(self.source, dir, f)
 
               section = zone_section(dir)
               payload = site_payload.deep_merge({"zonal" => section["zonal"]})

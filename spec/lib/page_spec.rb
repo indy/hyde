@@ -8,8 +8,7 @@ describe Hyde::Page do
     layout.content = "<laybefore>{{ content }}<layafter>"
     @layouts = {"lay" => layout}
 
-    @page = Hyde::Page.new("testsite", 
-                           data_folder(), 
+    @page = Hyde::Page.new(data_folder(), 
                            "page", 
                            "has-data.html")
     @page.render(@layouts, @page.data)
