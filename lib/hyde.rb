@@ -20,7 +20,6 @@ require 'hyde/site'
 require 'hyde/convertible'
 require 'hyde/layout'
 require 'hyde/page'
-require 'hyde/post'
 require 'hyde/filters'
 require 'hyde/snippet'
 
