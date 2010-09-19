@@ -2,7 +2,7 @@ require 'pp'
 module Hyde
 
   class Site
-    attr_accessor :config, :layouts, :posts, :snippets
+    attr_accessor :config, :layouts, :posts
     attr_accessor :source, :dest, :zones
 
     # Initialize the site
@@ -20,7 +20,6 @@ module Hyde
 
     def reset
       self.layouts = {}
-      self.snippets = {}
       self.zones = {}
     end
 
@@ -31,7 +30,6 @@ module Hyde
     def process
       self.reset
       self.read_layouts
-      self.read_snippets
 
       self.zones = self.read_zones
 
@@ -62,19 +60,6 @@ module Hyde
       entries.each do |f|
         name = f.split(".")[0..-2].join(".")
         self.layouts[name] = Layout.new(self, base, f)
-      end
-    rescue Errno::ENOENT => e
-      # ignore missing layout dir
-    end
-
-
-    def read_snippets
-      base, entries = folder_info("_snippets")
-
-      entries.each do |f|
-        name = f.split(".")[0..-2].join(".")
-        sn = Snippet.new(self, base, f)
-        self.snippets[name] = sn.render(self.layouts, site_payload)
       end
     rescue Errno::ENOENT => e
       # ignore missing layout dir
@@ -212,7 +197,6 @@ module Hyde
       {"site" => {
           "name" => "indy.io"
         },
-        "snippet" => self.snippets,
         "zone" => self.zones
       }
     end

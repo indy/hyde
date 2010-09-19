@@ -25,11 +25,6 @@ describe Hyde::Site do
     @site.layouts.length.should == 6
   end
 
-  it "should read snippets" do
-    @site.read_snippets
-    @site.snippets.length.should == 2
-  end
-
   it "should create posts" do
     posts = @site.create_posts("journal")
     posts.length.should == 7

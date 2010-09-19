@@ -21,7 +21,6 @@ require 'hyde/convertible'
 require 'hyde/layout'
 require 'hyde/page'
 require 'hyde/filters'
-require 'hyde/snippet'
 
 module Hyde
   # Default options. Overriden by values in _config.yaml or command-line opts.
