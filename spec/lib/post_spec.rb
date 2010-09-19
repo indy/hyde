@@ -12,7 +12,7 @@ describe Hyde::Post do
     @post = Hyde::Post.new(data_folder(), 
                            File.join('post', '_posts'), 
                            @postname)
-    @post.render(@layouts, {})
+    @post.render(@layouts, @post.data)
   end
 
   it "should be named with a valid format" do

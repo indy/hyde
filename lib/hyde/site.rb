@@ -92,8 +92,8 @@ module Hyde
       my_posts = []
 
       entries.each do |f|
-        if Post.valid?(f)
-          post = Post.new(self.source, posts_dir, f)
+        if Page.valid?(f)
+          post = Page.new(self.source, posts_dir, f)
 
           if not post.draft
             my_posts << post

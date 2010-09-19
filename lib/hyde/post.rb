@@ -26,11 +26,10 @@ module Hyde
 
       # is this a post?
       if dir.split('/')[-1] == '_posts' 
-        @base_dir = dir.split('/')[0..-2].join('/')
+        @dir = dir.split('/')[0..-2].join('/')
       else
-        @base_dir = dir
+        @dir = dir
       end
-
 
       if name =~ MATCHER
         @sort_alpha = false
@@ -38,7 +37,6 @@ module Hyde
         @sort_alpha = true
       end
 
-      @base = File.join(base, dir)
       @name = name
 
       if @sort_alpha
@@ -49,8 +47,8 @@ module Hyde
       end
       self.slug = slug
 
-      self.read_yaml(@base, name)
-
+      self.read_yaml(File.join(base, dir), name)
+      self.data ||= {}
       if self.data.has_key?('draft') && self.data['draft'] == true
         self.draft = true
       else
@@ -75,7 +73,7 @@ module Hyde
     #
     # Returns <String>
     def dir
-      @base_dir + '/'
+      @dir + '/'
     end
 
     # The generated relative url of this post
@@ -86,7 +84,7 @@ module Hyde
     end
 
     def folder
-      @base_dir
+      @dir
     end
 
     # The UID for this post (useful in feeds)
@@ -104,8 +102,7 @@ module Hyde
     # Returns nothing
     def render(layouts, site_payload)
       # construct payload
-      payload =
-      {
+      payload = {
         "site" => {},
         "page" => self.to_liquid
       }
@@ -119,7 +116,7 @@ module Hyde
     #
     # Returns nothing
     def write(dest)
-      FileUtils.mkdir_p(File.join(dest, dir))
+      FileUtils.mkdir_p(File.join(dest, @dir))
 
       path = File.join(dest, self.url)
 
