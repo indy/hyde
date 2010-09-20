@@ -38,10 +38,10 @@ describe Hyde::Page do
   it "should have a valid post id" do
     postname = "2010-09-13-sample-post.html"
     @post = Hyde::Page.new(data_folder(), 
-                           File.join('post', '_posts'), 
+                           File.join('page', '_posts'), 
                            postname)
     @post.render(@layouts, @post.data)
-    @post.id.should == "post/sample-post"
+    @post.id.should == "page/sample-post"
   end
 
 end
