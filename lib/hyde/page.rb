@@ -23,9 +23,8 @@ module Hyde
     #
     # Returns <Page>
     def initialize(base, dir, name)
-#      puts "PAGE: base=#{base}, dir=#{dir}, name=#{name}"
 
-      # is this a post?
+      # is this part of a series of posts?
       if dir.split('/')[-1] == '_posts' 
         @dir = dir.split('/')[0..-2].join('/')
       else
@@ -47,6 +46,7 @@ module Hyde
         self.date = Time.parse(date)
       end
       self.slug = slug
+      self.ext = ext
 
       self.read_yaml(File.join(base, dir), name)
       self.data ||= {}
@@ -58,8 +58,6 @@ module Hyde
       end
     end
 
-    # Spaceship is based on Post#date
-    #
     # Returns -1, 0, 1
     def <=>(other)
       if @sort_alpha
@@ -73,7 +71,7 @@ module Hyde
     #
     # Returns <String>
     def url
-      @dir + '/' + self.slug + '.html'
+      @dir + '/' + self.slug + self.ext
     end
 
     # Add any necessary layouts to this post
@@ -83,11 +81,8 @@ module Hyde
     # Returns nothing
     def render(layouts, site_payload)
       payload = {
-        "site" => {},
         "page" => self.to_liquid
-      }
-
-      payload = payload.deep_merge(site_payload)
+      }.deep_merge(site_payload)
 
       do_layout(payload, layouts)
     end
