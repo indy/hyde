@@ -12,7 +12,6 @@ require 'yaml'
 
 # 3rd party
 require 'liquid'
-require 'redcloth'
 
 # internal requires
 require 'hyde/core_ext'
