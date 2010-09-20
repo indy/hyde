@@ -1,4 +1,3 @@
-require 'pp'
 module Hyde
 
   class Site
