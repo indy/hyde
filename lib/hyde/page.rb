@@ -73,17 +73,8 @@ module Hyde
     #
     # Returns <String>
     def url
-      self.id + '.html'
+      @dir + '/' + self.slug + '.html'
     end
-
-    # The UID for this post (useful in feeds)
-    # e.g. my-awesome-post
-    #
-    # Returns <String>
-    def id
-      @dir + '/' + self.slug
-    end
-
 
     # Add any necessary layouts to this post
     #   +layouts+ is a Hash of {"name" => "layout"}
@@ -124,12 +115,11 @@ module Hyde
         "url" => self.url,
         "folder" => @dir,
         "date" => self.date,
-        "id" => self.id,
         "content" => self.content }.deep_merge(self.data)
     end
 
     def inspect
-      "<Post: #{self.id}>"
+      "<Post: #{self.url}>"
     end
 
 

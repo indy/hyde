@@ -41,7 +41,7 @@ describe Hyde::Page do
                            File.join('page', '_posts'), 
                            postname)
     @post.render(@layouts, @post.data)
-    @post.id.should == "page/sample-post"
+    @post.url.should == "page/sample-post.html"
   end
 
 end
