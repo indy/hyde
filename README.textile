@@ -1,0 +1,11 @@
+h1. Hyde
+
+Hyde is a version of the static site generator "Jekyll.":http://github.com/mojombo/jekyll It's  been gutted to the absolute bare essentials required to generate "indy.io":http://indy.io
+
+h2. Runtime Dependencies
+
+* Liquid: Templating system (Ruby)
+
+h2. License
+
+See LICENSE.
