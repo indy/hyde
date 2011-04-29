@@ -1,6 +1,11 @@
 module Hyde
 
   module Filters
+
+    def date_to_month_year(date)
+      date.strftime("%B %Y")
+    end
+
     def date_to_string(date)
       date.strftime("%d %b %Y")
     end

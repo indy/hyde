@@ -1,3 +1,5 @@
+#require 'pp'
+
 module Hyde
 
   class Site
@@ -31,6 +33,7 @@ module Hyde
       self.read_layouts
 
       self.zones = self.read_zones
+      # pp self.zones
 
       self.transform_pages
     end
@@ -95,6 +98,8 @@ module Hyde
       entries = filter_entries(Dir.entries(base))
       directories = entries.select { |e| File.directory?(File.join(base, e)) }
 
+
+
       zonal_filename = File.join(base, '_zonal.yaml')
       if File.exist?(zonal_filename)
         structure["zonal"] = YAML.load(IO.read(zonal_filename))
@@ -109,8 +114,28 @@ module Hyde
 
       directories.each do |f|
         next if self.dest.sub(/\/$/, '') == File.join(base, f)
-        structure[f] = {}
+        structure[f] = {"name" => f}
+
         read_zones(File.join(dir, f), structure[f])
+
+        if structure[f]["zonal"]["visible_child"]
+          structure["visible_children"] ||= []
+          structure["visible_children"] << structure[f]
+        end
+      end
+
+      if structure["visible_children"]
+        structure["visible_children"].sort! { |x,y|
+          # note: this will probably break if only 
+          # some of the children have dates
+          if x["zonal"]["publish_date"] and y["zonal"]["publish_date"]
+            xd = x["zonal"]["publish_date"]
+            yd = y["zonal"]["publish_date"]            
+            yd <=> xd
+          else
+            x["name"] <=> y["name"]
+          end
+        }
       end
 
       structure
