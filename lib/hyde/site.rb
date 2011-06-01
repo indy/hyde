@@ -4,7 +4,7 @@ module Hyde
 
   class Site
     attr_accessor :config, :layouts, :posts
-    attr_accessor :source, :dest, :zones
+    attr_accessor :source, :dest, :zones, :partial_build
 
     # Initialize the site
     #   +config+ is a Hash containing site configurations details
@@ -15,6 +15,8 @@ module Hyde
 
       self.source          = config['source']
       self.dest            = config['destination']
+
+      self.partial_build   = config['partial_site']
 
       self.reset
     end
